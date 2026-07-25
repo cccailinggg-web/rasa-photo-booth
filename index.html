@@ -3,37 +3,290 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#0a0909">
+  <meta name="theme-color" content="#050505">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="description" content="RASA 文義復興線上拍貼機：選擇套框、拍照並下載，照片不會上傳或保存。">
-  <title>RASA 線上拍貼機</title>
+  <meta name="description" content="RASA 文義復興線上拍貼機：選擇濾鏡、拍照並下載，照片不會上傳或保存。">
+  <title>RASA PHOTO BOOTH</title>
   <link rel="stylesheet" href="./styles.css">
+
+  <style>
+    .intro-screen {
+      position: relative;
+      justify-content: space-between;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(255, 255, 255, 0.05), transparent 26%),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.04), transparent 28%),
+        #050505;
+    }
+
+    .intro-screen::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,0.03), transparent 20%, transparent 80%, rgba(255,255,255,0.02)),
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,0.02) 0px,
+          rgba(255,255,255,0.02) 1px,
+          transparent 1px,
+          transparent 5px
+        );
+      opacity: 0.5;
+    }
+
+    .intro-topbar,
+    .intro-bottombar {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      width: 100%;
+      align-items: center;
+    }
+
+    .intro-topbar {
+      justify-content: flex-start;
+      min-height: 72px;
+    }
+
+    .intro-bottombar {
+      justify-content: flex-end;
+      min-height: 64px;
+      margin-top: 18px;
+    }
+
+    .corner-logo-rasa {
+      width: min(150px, 42vw);
+      opacity: 0.92;
+    }
+
+    .corner-logo-wenyi {
+      width: min(170px, 48vw);
+      opacity: 0.9;
+    }
+
+    .intro-machine-wrap {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      flex: 1;
+      padding: 12px 0;
+    }
+
+    .intro-machine {
+      width: 100%;
+      max-width: 430px;
+      padding: 14px;
+      border-radius: 34px;
+      background:
+        linear-gradient(180deg, #191919 0%, #0d0d0d 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow:
+        0 26px 60px rgba(0, 0, 0, 0.55),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+
+    .machine-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 6px 6px 14px;
+    }
+
+    .machine-brand {
+      color: #f2ef69;
+      font-size: 0.74rem;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      white-space: nowrap;
+    }
+
+    .machine-lights {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .machine-light {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #2a2a2a;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.05);
+    }
+
+    .machine-light.is-on {
+      background: #f2ef69;
+      box-shadow: 0 0 12px rgba(242, 239, 105, 0.55);
+    }
+
+    .machine-window {
+      position: relative;
+      overflow: hidden;
+      border-radius: 26px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01)),
+        #0b0b0b;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,0.03),
+        inset 0 20px 40px rgba(255,255,255,0.02);
+    }
+
+    .machine-window::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(130deg, rgba(255,255,255,0.08), transparent 32%);
+      opacity: 0.6;
+    }
+
+    .window-screen {
+      position: relative;
+      z-index: 1;
+      padding: 28px 22px 24px;
+      min-height: 420px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .window-tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 28px;
+      padding: 0 12px;
+      border-radius: 999px;
+      margin-bottom: 16px;
+      color: #111;
+      background: #f2ef69;
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+    }
+
+    .window-screen .eyebrow {
+      margin-bottom: 8px;
+      color: #8e8e8e;
+      letter-spacing: 0.18em;
+    }
+
+    .window-screen h1 {
+      margin: 0;
+      color: #fff8e8;
+      font-size: clamp(2.1rem, 8vw, 3.4rem);
+      line-height: 0.98;
+      letter-spacing: -0.05em;
+    }
+
+    .window-copy {
+      max-width: 18em;
+      margin: 18px 0 0;
+      color: #bdb4a3;
+      font-size: 0.98rem;
+      line-height: 1.8;
+    }
+
+    .window-bottom {
+      position: relative;
+      z-index: 1;
+      padding: 0 18px 18px;
+    }
+
+    .start-button {
+      min-height: 56px;
+      font-size: 0.95rem;
+      letter-spacing: 0.12em;
+    }
+
+    .intro-screen .privacy-note {
+      margin-top: 14px;
+      font-size: 0.74rem;
+      color: #8e8e8e;
+    }
+
+    .camera-screen .topbar h1,
+    .result-screen .topbar h1 {
+      letter-spacing: -0.03em;
+    }
+
+    .frame-option span:last-child {
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 0.72rem;
+    }
+
+    @media (min-width: 640px) {
+      .window-screen {
+        min-height: 460px;
+        padding: 34px 28px 26px;
+      }
+
+      .window-bottom {
+        padding: 0 22px 22px;
+      }
+
+      .intro-machine {
+        max-width: 460px;
+      }
+    }
+  </style>
 </head>
 
 <body>
   <main class="app-shell">
     <section class="screen intro-screen is-active" id="introScreen" aria-labelledby="introTitle">
-      <div class="intro-card">
-        <div class="brand-panel" aria-label="RASA 文義復興">
-          <img class="brand-logo brand-logo-rasa" src="./assets/rasa-logo.png" alt="RASA">
-          <div class="brand-divider" aria-hidden="true"></div>
-          <img class="brand-logo brand-logo-wenyi" src="./assets/wenyi-logo.png" alt="文義復興 Chiayi">
+      <div class="intro-topbar" aria-hidden="true">
+        <img class="corner-logo-rasa" src="./assets/rasa-logo.png" alt="RASA">
+      </div>
+
+      <div class="intro-machine-wrap">
+        <div class="intro-machine">
+          <div class="machine-head">
+            <div class="machine-brand">RASA PRESENT</div>
+            <div class="machine-lights" aria-hidden="true">
+              <span class="machine-light is-on"></span>
+              <span class="machine-light"></span>
+              <span class="machine-light"></span>
+            </div>
+          </div>
+
+          <div class="machine-window">
+            <div class="window-screen">
+              <div class="window-tag">PHOTO MODE</div>
+              <p class="eyebrow">A NEW RITUAL AFTER SUNSET</p>
+              <h1 id="introTitle">RASA<br>PHOTO BOOTH</h1>
+              <p class="window-copy">
+                Choose a filter, open the camera, and keep tonight with you.
+              </p>
+            </div>
+
+            <div class="window-bottom">
+              <button class="primary-button start-button" id="startButton" type="button">
+                START BOOTH
+              </button>
+
+              <p class="privacy-note">
+                照片只會在你的裝置內完成合成，不會上傳或保存。
+              </p>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <p class="eyebrow">RASA PRESENT</p>
-        <h1 id="introTitle">線上拍貼機</h1>
-        <p class="intro-copy">
-          選一款今晚的顏色，打開相機，留下你的 RASA 時刻。
-        </p>
-
-        <button class="primary-button start-button" id="startButton" type="button">
-          開啟拍貼機
-        </button>
-
-        <p class="privacy-note">
-          照片只會在你的裝置內完成合成，不會上傳或保存。
-        </p>
+      <div class="intro-bottombar" aria-hidden="true">
+        <img class="corner-logo-wenyi" src="./assets/wenyi-logo.png" alt="文義復興 Chiayi">
       </div>
     </section>
 
@@ -41,7 +294,7 @@
       <header class="topbar">
         <div>
           <p class="eyebrow">RASA PHOTO BOOTH</p>
-          <h1 id="cameraTitle">選框拍一張</h1>
+          <h1 id="cameraTitle">Choose a Filter</h1>
         </div>
         <button class="icon-button" id="cameraSwitchButton" type="button" aria-label="切換前後鏡頭">
           <span aria-hidden="true">↻</span>
@@ -71,21 +324,21 @@
           <span class="frame-thumbnail frame-thumbnail-red">
             <img src="./assets/frame-red.png" alt="">
           </span>
-          <span>紅 × 綠</span>
+          <span>EMBER</span>
         </button>
 
         <button class="frame-option" type="button" data-frame-index="1" aria-pressed="false">
           <span class="frame-thumbnail frame-thumbnail-green">
             <img src="./assets/frame-green.png" alt="">
           </span>
-          <span>綠 × 橘</span>
+          <span>MOSS</span>
         </button>
 
         <button class="frame-option" type="button" data-frame-index="2" aria-pressed="false">
           <span class="frame-thumbnail frame-thumbnail-orange">
             <img src="./assets/frame-orange.png" alt="">
           </span>
-          <span>橘 × 紅</span>
+          <span>AMBER</span>
         </button>
       </div>
 
@@ -106,7 +359,7 @@
       <header class="topbar result-topbar">
         <div>
           <p class="eyebrow">RASA PHOTO BOOTH</p>
-          <h1 id="resultTitle">照片完成</h1>
+          <h1 id="resultTitle">Photo Ready</h1>
         </div>
       </header>
 
