@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0909">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="description" content="RASA 文義復興線上拍貼機：選擇套框、拍照並下載，照片不會上傳或保存。">
+  <title>RASA 線上拍貼機</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+  <main class="app-shell">
+    <section class="screen intro-screen is-active" id="introScreen" aria-labelledby="introTitle">
+      <div class="intro-card">
+        <div class="brand-panel" aria-label="RASA 文義復興">
+          <img class="brand-logo brand-logo-rasa" src="./assets/rasa-logo.png" alt="RASA">
+          <div class="brand-divider" aria-hidden="true"></div>
+          <img class="brand-logo brand-logo-wenyi" src="./assets/wenyi-logo.png" alt="文義復興 Chiayi">
+        </div>
+
+        <p class="eyebrow">RASA PRESENT</p>
+        <h1 id="introTitle">線上拍貼機</h1>
+        <p class="intro-copy">
+          選一款今晚的顏色，打開相機，留下你的 RASA 時刻。
+        </p>
+
+        <button class="primary-button start-button" id="startButton" type="button">
+          開啟拍貼機
+        </button>
+
+        <p class="privacy-note">
+          照片只會在你的裝置內完成合成，不會上傳或保存。
+        </p>
+      </div>
+    </section>
+
+    <section class="screen camera-screen" id="cameraScreen" aria-labelledby="cameraTitle">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">RASA PHOTO BOOTH</p>
+          <h1 id="cameraTitle">選框拍一張</h1>
+        </div>
+        <button class="icon-button" id="cameraSwitchButton" type="button" aria-label="切換前後鏡頭">
+          <span aria-hidden="true">↻</span>
+          <span class="icon-button-label">鏡頭</span>
+        </button>
+      </header>
+
+      <div class="camera-card">
+        <div class="camera-stage" id="cameraStage">
+          <video id="cameraVideo" autoplay muted playsinline aria-label="相機預覽"></video>
+          <img
+            id="frameOverlay"
+            class="frame-overlay"
+            src="./assets/frame-red.png"
+            alt=""
+            aria-hidden="true"
+          >
+          <div class="camera-status" id="cameraStatus" role="status" aria-live="polite">
+            正在開啟相機…
+          </div>
+          <div class="flash-layer" aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <div class="frame-picker" role="group" aria-label="選擇照片套框">
+        <button class="frame-option is-selected" type="button" data-frame-index="0" aria-pressed="true">
+          <span class="frame-thumbnail frame-thumbnail-red">
+            <img src="./assets/frame-red.png" alt="">
+          </span>
+          <span>紅 × 綠</span>
+        </button>
+
+        <button class="frame-option" type="button" data-frame-index="1" aria-pressed="false">
+          <span class="frame-thumbnail frame-thumbnail-green">
+            <img src="./assets/frame-green.png" alt="">
+          </span>
+          <span>綠 × 橘</span>
+        </button>
+
+        <button class="frame-option" type="button" data-frame-index="2" aria-pressed="false">
+          <span class="frame-thumbnail frame-thumbnail-orange">
+            <img src="./assets/frame-orange.png" alt="">
+          </span>
+          <span>橘 × 紅</span>
+        </button>
+      </div>
+
+      <div class="capture-controls">
+        <button class="shutter-button" id="captureButton" type="button" disabled aria-label="拍照">
+          <span class="shutter-inner" aria-hidden="true"></span>
+        </button>
+        <p class="capture-hint">直式拍攝效果最佳</p>
+      </div>
+
+      <div class="permission-help" id="permissionHelp" hidden>
+        <p id="permissionMessage">無法開啟相機。</p>
+        <button class="secondary-button" id="retryButton" type="button">重新嘗試</button>
+      </div>
+    </section>
+
+    <section class="screen result-screen" id="resultScreen" aria-labelledby="resultTitle">
+      <header class="topbar result-topbar">
+        <div>
+          <p class="eyebrow">RASA PHOTO BOOTH</p>
+          <h1 id="resultTitle">照片完成</h1>
+        </div>
+      </header>
+
+      <div class="result-card">
+        <img id="resultImage" alt="拍攝完成的 RASA 套框照片">
+      </div>
+
+      <div class="result-actions">
+        <button class="primary-button" id="shareButton" type="button" hidden>
+          分享／儲存照片
+        </button>
+
+        <a class="secondary-button download-button" id="downloadButton" href="#" download>
+          下載照片
+        </a>
+
+        <button class="text-button" id="retakeButton" type="button">
+          重新拍攝
+        </button>
+      </div>
+
+      <p class="ios-note">
+        若 iPhone 點擊下載後只開啟圖片，可長按圖片並選擇「儲存到照片」。
+      </p>
+    </section>
+  </main>
+
+  <canvas id="captureCanvas" width="1633" height="2048" hidden></canvas>
+  <script src="./app.js" defer></script>
+</body>
+</html>
