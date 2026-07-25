@@ -6,11 +6,20 @@
   <meta name="theme-color" content="#050505">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="description" content="RASA 文義復興線上拍貼機：選擇濾鏡、拍照並下載，照片不會上傳或保存。">
+  <meta
+    name="description"
+    content="RASA PHOTO BOOTH：選擇濾鏡、拍照並下載，照片不會上傳或保存。"
+  >
   <title>RASA PHOTO BOOTH</title>
+
   <link rel="stylesheet" href="./styles.css">
 
   <style>
+    /*
+      首頁與導覽視覺補充
+      這一段直接放在 index.html 中，因此不需要修改 styles.css。
+    */
+
     .intro-screen {
       position: relative;
       justify-content: space-between;
@@ -27,11 +36,17 @@
       inset: 0;
       pointer-events: none;
       background:
-        linear-gradient(to bottom, rgba(255,255,255,0.03), transparent 20%, transparent 80%, rgba(255,255,255,0.02)),
+        linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0.03),
+          transparent 20%,
+          transparent 80%,
+          rgba(255, 255, 255, 0.02)
+        ),
         repeating-linear-gradient(
           to bottom,
-          rgba(255,255,255,0.02) 0px,
-          rgba(255,255,255,0.02) 1px,
+          rgba(255, 255, 255, 0.02) 0,
+          rgba(255, 255, 255, 0.02) 1px,
           transparent 1px,
           transparent 5px
         );
@@ -49,47 +64,70 @@
 
     .intro-topbar {
       justify-content: flex-start;
-      min-height: 72px;
+      min-height: 58px;
     }
 
     .intro-bottombar {
       justify-content: flex-end;
-      min-height: 64px;
-      margin-top: 18px;
+      min-height: 54px;
+      margin-top: 14px;
     }
 
-    .corner-logo-rasa {
-      width: min(150px, 42vw);
-      opacity: 0.92;
+    /*
+      附件 RASA Logo 為深色，因此放在小型黃底銘牌上。
+      相較上一版進一步縮小，不會占滿首頁。
+    */
+
+    .intro-logo-plate,
+    .home-logo-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #f2ef69;
+      box-shadow:
+        inset 0 0 0 1px rgba(0, 0, 0, 0.12),
+        0 8px 24px rgba(0, 0, 0, 0.22);
+    }
+
+    .intro-logo-plate {
+      width: 112px;
+      min-height: 42px;
+      padding: 8px 12px;
+      border-radius: 12px;
+    }
+
+    .intro-logo-plate img {
+      display: block;
+      width: 100%;
+      height: auto;
     }
 
     .corner-logo-wenyi {
-      width: min(170px, 48vw);
-      opacity: 0.9;
+      width: min(142px, 42vw);
+      opacity: 0.82;
     }
 
     .intro-machine-wrap {
       position: relative;
       z-index: 1;
       display: flex;
+      flex: 1;
       align-items: center;
       justify-content: center;
       width: 100%;
-      flex: 1;
-      padding: 12px 0;
+      padding: 10px 0;
     }
 
     .intro-machine {
       width: 100%;
       max-width: 430px;
       padding: 14px;
-      border-radius: 34px;
-      background:
-        linear-gradient(180deg, #191919 0%, #0d0d0d 100%);
       border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 34px;
+      background: linear-gradient(180deg, #191919 0%, #0d0d0d 100%);
       box-shadow:
         0 26px 60px rgba(0, 0, 0, 0.55),
-        inset 0 1px 0 rgba(255,255,255,0.08);
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
     }
 
     .machine-head {
@@ -119,7 +157,7 @@
       height: 8px;
       border-radius: 50%;
       background: #2a2a2a;
-      box-shadow: 0 0 0 1px rgba(255,255,255,0.05);
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05);
     }
 
     .machine-light.is-on {
@@ -130,14 +168,18 @@
     .machine-window {
       position: relative;
       overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 26px;
       background:
-        linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01)),
+        linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.04),
+          rgba(255, 255, 255, 0.01)
+        ),
         #0b0b0b;
-      border: 1px solid rgba(255,255,255,0.08);
       box-shadow:
-        inset 0 0 0 1px rgba(255,255,255,0.03),
-        inset 0 20px 40px rgba(255,255,255,0.02);
+        inset 0 0 0 1px rgba(255, 255, 255, 0.03),
+        inset 0 20px 40px rgba(255, 255, 255, 0.02);
     }
 
     .machine-window::before {
@@ -145,30 +187,33 @@
       position: absolute;
       inset: 0;
       pointer-events: none;
-      background:
-        linear-gradient(130deg, rgba(255,255,255,0.08), transparent 32%);
+      background: linear-gradient(
+        130deg,
+        rgba(255, 255, 255, 0.08),
+        transparent 32%
+      );
       opacity: 0.6;
     }
 
     .window-screen {
       position: relative;
       z-index: 1;
-      padding: 28px 22px 24px;
-      min-height: 420px;
       display: flex;
+      min-height: 420px;
       flex-direction: column;
-      justify-content: center;
       align-items: flex-start;
+      justify-content: center;
+      padding: 28px 22px 24px;
     }
 
     .window-tag {
       display: inline-flex;
+      min-height: 28px;
       align-items: center;
       justify-content: center;
-      min-height: 28px;
+      margin-bottom: 16px;
       padding: 0 12px;
       border-radius: 999px;
-      margin-bottom: 16px;
       color: #111;
       background: #f2ef69;
       font-size: 0.72rem;
@@ -212,8 +257,51 @@
 
     .intro-screen .privacy-note {
       margin-top: 14px;
-      font-size: 0.74rem;
       color: #8e8e8e;
+      font-size: 0.74rem;
+    }
+
+    /*
+      拍照頁及完成頁：左側小 Logo 可直接回首頁。
+      href="./" 會重新載入首頁，也會自然關閉相機串流。
+    */
+
+    .page-heading {
+      display: grid;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .home-logo-link {
+      width: 76px;
+      min-height: 31px;
+      padding: 6px 8px;
+      border-radius: 9px;
+      text-decoration: none;
+      transition:
+        transform 140ms ease,
+        opacity 140ms ease;
+    }
+
+    .home-logo-link img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .home-logo-link:active {
+      transform: scale(0.96);
+      opacity: 0.82;
+    }
+
+    .home-logo-link:focus-visible {
+      outline: 2px solid #fff8e8;
+      outline-offset: 4px;
+    }
+
+    .camera-screen .topbar,
+    .result-screen .topbar {
+      align-items: flex-start;
     }
 
     .camera-screen .topbar h1,
@@ -222,12 +310,16 @@
     }
 
     .frame-option span:last-child {
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
       font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
     }
 
     @media (min-width: 640px) {
+      .intro-logo-plate {
+        width: 124px;
+      }
+
       .window-screen {
         min-height: 460px;
         padding: 34px 28px 26px;
@@ -240,21 +332,33 @@
       .intro-machine {
         max-width: 460px;
       }
+
+      .home-logo-link {
+        width: 84px;
+      }
     }
   </style>
 </head>
 
 <body>
   <main class="app-shell">
-    <section class="screen intro-screen is-active" id="introScreen" aria-labelledby="introTitle">
-      <div class="intro-topbar" aria-hidden="true">
-        <img class="corner-logo-rasa" src="./assets/rasa-logo.png" alt="RASA">
+    <!-- 首頁 -->
+    <section
+      class="screen intro-screen is-active"
+      id="introScreen"
+      aria-labelledby="introTitle"
+    >
+      <div class="intro-topbar">
+        <div class="intro-logo-plate">
+          <img src="./assets/rasa-logo.png" alt="RASA">
+        </div>
       </div>
 
       <div class="intro-machine-wrap">
         <div class="intro-machine">
           <div class="machine-head">
             <div class="machine-brand">RASA PRESENT</div>
+
             <div class="machine-lights" aria-hidden="true">
               <span class="machine-light is-on"></span>
               <span class="machine-light"></span>
@@ -266,14 +370,23 @@
             <div class="window-screen">
               <div class="window-tag">PHOTO MODE</div>
               <p class="eyebrow">A NEW RITUAL AFTER SUNSET</p>
-              <h1 id="introTitle">RASA<br>PHOTO BOOTH</h1>
+
+              <h1 id="introTitle">
+                RASA<br>
+                PHOTO BOOTH
+              </h1>
+
               <p class="window-copy">
                 Choose a filter, open the camera, and keep tonight with you.
               </p>
             </div>
 
             <div class="window-bottom">
-              <button class="primary-button start-button" id="startButton" type="button">
+              <button
+                class="primary-button start-button"
+                id="startButton"
+                type="button"
+              >
                 START BOOTH
               </button>
 
@@ -285,18 +398,44 @@
         </div>
       </div>
 
-      <div class="intro-bottombar" aria-hidden="true">
-        <img class="corner-logo-wenyi" src="./assets/wenyi-logo.png" alt="文義復興 Chiayi">
+      <div class="intro-bottombar">
+        <img
+          class="corner-logo-wenyi"
+          src="./assets/wenyi-logo.png"
+          alt="文義復興 Chiayi"
+        >
       </div>
     </section>
 
-    <section class="screen camera-screen" id="cameraScreen" aria-labelledby="cameraTitle">
+    <!-- 拍照頁 -->
+    <section
+      class="screen camera-screen"
+      id="cameraScreen"
+      aria-labelledby="cameraTitle"
+    >
       <header class="topbar">
-        <div>
-          <p class="eyebrow">RASA PHOTO BOOTH</p>
-          <h1 id="cameraTitle">Choose a Filter</h1>
+        <div class="page-heading">
+          <a
+            class="home-logo-link"
+            href="./"
+            aria-label="回到 RASA PHOTO BOOTH 首頁"
+            title="回首頁"
+          >
+            <img src="./assets/rasa-logo.png" alt="RASA">
+          </a>
+
+          <div>
+            <p class="eyebrow">RASA PHOTO BOOTH</p>
+            <h1 id="cameraTitle">Choose a Filter</h1>
+          </div>
         </div>
-        <button class="icon-button" id="cameraSwitchButton" type="button" aria-label="切換前後鏡頭">
+
+        <button
+          class="icon-button"
+          id="cameraSwitchButton"
+          type="button"
+          aria-label="切換前後鏡頭"
+        >
           <span aria-hidden="true">↻</span>
           <span class="icon-button-label">鏡頭</span>
         </button>
@@ -304,7 +443,14 @@
 
       <div class="camera-card">
         <div class="camera-stage" id="cameraStage">
-          <video id="cameraVideo" autoplay muted playsinline aria-label="相機預覽"></video>
+          <video
+            id="cameraVideo"
+            autoplay
+            muted
+            playsinline
+            aria-label="相機預覽"
+          ></video>
+
           <img
             id="frameOverlay"
             class="frame-overlay"
@@ -312,29 +458,51 @@
             alt=""
             aria-hidden="true"
           >
-          <div class="camera-status" id="cameraStatus" role="status" aria-live="polite">
+
+          <div
+            class="camera-status"
+            id="cameraStatus"
+            role="status"
+            aria-live="polite"
+          >
             正在開啟相機…
           </div>
+
           <div class="flash-layer" aria-hidden="true"></div>
         </div>
       </div>
 
-      <div class="frame-picker" role="group" aria-label="選擇照片套框">
-        <button class="frame-option is-selected" type="button" data-frame-index="0" aria-pressed="true">
+      <div class="frame-picker" role="group" aria-label="選擇照片濾鏡">
+        <button
+          class="frame-option is-selected"
+          type="button"
+          data-frame-index="0"
+          aria-pressed="true"
+        >
           <span class="frame-thumbnail frame-thumbnail-red">
             <img src="./assets/frame-red.png" alt="">
           </span>
           <span>EMBER</span>
         </button>
 
-        <button class="frame-option" type="button" data-frame-index="1" aria-pressed="false">
+        <button
+          class="frame-option"
+          type="button"
+          data-frame-index="1"
+          aria-pressed="false"
+        >
           <span class="frame-thumbnail frame-thumbnail-green">
             <img src="./assets/frame-green.png" alt="">
           </span>
           <span>MOSS</span>
         </button>
 
-        <button class="frame-option" type="button" data-frame-index="2" aria-pressed="false">
+        <button
+          class="frame-option"
+          type="button"
+          data-frame-index="2"
+          aria-pressed="false"
+        >
           <span class="frame-thumbnail frame-thumbnail-orange">
             <img src="./assets/frame-orange.png" alt="">
           </span>
@@ -343,40 +511,87 @@
       </div>
 
       <div class="capture-controls">
-        <button class="shutter-button" id="captureButton" type="button" disabled aria-label="拍照">
+        <button
+          class="shutter-button"
+          id="captureButton"
+          type="button"
+          disabled
+          aria-label="拍照"
+        >
           <span class="shutter-inner" aria-hidden="true"></span>
         </button>
+
         <p class="capture-hint">直式拍攝效果最佳</p>
       </div>
 
       <div class="permission-help" id="permissionHelp" hidden>
         <p id="permissionMessage">無法開啟相機。</p>
-        <button class="secondary-button" id="retryButton" type="button">重新嘗試</button>
+
+        <button
+          class="secondary-button"
+          id="retryButton"
+          type="button"
+        >
+          重新嘗試
+        </button>
       </div>
     </section>
 
-    <section class="screen result-screen" id="resultScreen" aria-labelledby="resultTitle">
+    <!-- 完成頁 -->
+    <section
+      class="screen result-screen"
+      id="resultScreen"
+      aria-labelledby="resultTitle"
+    >
       <header class="topbar result-topbar">
-        <div>
-          <p class="eyebrow">RASA PHOTO BOOTH</p>
-          <h1 id="resultTitle">Photo Ready</h1>
+        <div class="page-heading">
+          <a
+            class="home-logo-link"
+            href="./"
+            aria-label="回到 RASA PHOTO BOOTH 首頁"
+            title="回首頁"
+          >
+            <img src="./assets/rasa-logo.png" alt="RASA">
+          </a>
+
+          <div>
+            <p class="eyebrow">RASA PHOTO BOOTH</p>
+            <h1 id="resultTitle">Photo Ready</h1>
+          </div>
         </div>
       </header>
 
       <div class="result-card">
-        <img id="resultImage" alt="拍攝完成的 RASA 套框照片">
+        <img
+          id="resultImage"
+          alt="拍攝完成的 RASA 套框照片"
+        >
       </div>
 
       <div class="result-actions">
-        <button class="primary-button" id="shareButton" type="button" hidden>
+        <button
+          class="primary-button"
+          id="shareButton"
+          type="button"
+          hidden
+        >
           分享／儲存照片
         </button>
 
-        <a class="secondary-button download-button" id="downloadButton" href="#" download>
+        <a
+          class="secondary-button download-button"
+          id="downloadButton"
+          href="#"
+          download
+        >
           下載照片
         </a>
 
-        <button class="text-button" id="retakeButton" type="button">
+        <button
+          class="text-button"
+          id="retakeButton"
+          type="button"
+        >
           重新拍攝
         </button>
       </div>
@@ -387,7 +602,13 @@
     </section>
   </main>
 
-  <canvas id="captureCanvas" width="1633" height="2048" hidden></canvas>
+  <canvas
+    id="captureCanvas"
+    width="1633"
+    height="2048"
+    hidden
+  ></canvas>
+
   <script src="./app.js" defer></script>
 </body>
 </html>
